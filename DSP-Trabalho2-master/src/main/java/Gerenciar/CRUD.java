@@ -555,7 +555,7 @@ public class CRUD {
         return "Excluído com sucesso";
     }
     
-     public String VerificaCliente(boolean dbAtual, String tabela, long id  ) {
+ public String VerificaCliente(boolean dbAtual, String tabela, long id  ) {
  CRUD crud = new CRUD();
    
         String registro= "";
@@ -586,5 +586,82 @@ public class CRUD {
         }
         return registro;
     }
+ 
+ public String VerificaProduto(boolean dbAtual, String tabela, long id  ) {
+ CRUD crud = new CRUD();
+   
+        String registro= "";
+        try{
+            
+            if(true == dbAtual){
+                if (crud.checkID(dbAtual, tabela, id)){
+                    JOptionPane.showMessageDialog(null, "ID não econtrado");
+                }else{
+                    DAOpostgres daoPsql = new DAOpostgres();
+                    Produtos p;
+                    p = (Produtos) daoPsql.getByID(tabela, id);
+                    registro = "\nProduto: \nNome:" + p.getNome()
+                                + "\nSobrenome:" + p.getFornecedor()
+                                + "\nEmail:" + p.getPreco()
+                                //+ "\nCelular:" + p.getCodigo()
+                                + "\nQuantidade Produto:" + p.getQuantidade();
+                    System.out.println(registro);
+                }
+            }else{
+                 if (crud.checkID(dbAtual, tabela, id)){
+                DAOmysql daoMsql = new DAOmysql();
+                 Produtos p;
+                    p = (Produtos) daoMsql.getByID(tabela, id);
+                    registro = "\n " + p.getNome()
+                                + "\n " + p.getFornecedor()
+                                + "\nEmail:" + p.getPreco()
+                                //+ "\nCelular:" + p.getCodigo()
+                                + "\n " + p.getQuantidade();
+                    System.out.println(registro);
+                 }else{
+                     JOptionPane.showMessageDialog(null, "ID não econtrado");
+                 }
+            
+            }
+        } catch (Exception e) {
+            registro = "Ops! Algo deu errado. CRUD.getById: linha 172\nErro: " + e.getMessage();
+        }
+        return registro;
+    }
+ 
+ public String VerificaFuncionario(boolean dbAtual, String tabela, long id) {
+ CRUD crud = new CRUD();
+   
+        String registro= "";
+        try{
+            
+            if(true == dbAtual){
+                if (crud.checkID(dbAtual, tabela, id)){
+                    JOptionPane.showMessageDialog(null, "ID não econtrado");
+                }else{
+                    DAOpostgres daoPsql = new DAOpostgres();
+                    Funcionarios f;
+                        f = (Funcionarios) daoPsql.getByID(tabela, id);
+                        registro = "\nFuncionario: \nNome:" + f.getNome();
+                    System.out.println(registro);
+                }
+            }else{
+                 if (crud.checkID(dbAtual, tabela, id)){
+                DAOmysql daoMsql = new DAOmysql();
+                 Funcionarios f;
+                        f = (Funcionarios) daoMsql.getByID(tabela, id);
+                        registro = "\nFuncionario: \nNome:" + f.getNome();
+                    System.out.println(registro);
+                 }else{
+                     JOptionPane.showMessageDialog(null, "ID não econtrado");
+                 }
+            
+            }
+        } catch (Exception e) {
+            registro = "Ops! Algo deu errado. CRUD.getById: linha 172\nErro: " + e.getMessage();
+        }
+        return registro;
+    }
+
 
 }
